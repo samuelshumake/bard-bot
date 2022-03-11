@@ -1,0 +1,30 @@
+{
+  "name": "bard-bot",
+  "version": "1.0.0",
+  "description": "Discord bot for playing music and other fun commands.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samuelshumake/bard-bot.git"
+  },
+  "author": "Samuel Shumake",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samuelshumake/bard-bot/issues"
+  },
+  "homepage": "https://github.com/samuelshumake/bard-bot#readme",
+  "dependencies": {
+    "@discordjs/opus": "github:discordjs/opus",
+    "@discordjs/voice": "^0.8.0",
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0",
+    "ffmpeg-static": "^4.4.1",
+    "libsodium-wrappers": "^0.7.9",
+    "sodium": "^3.0.2",
+    "yt-search": "^2.10.3",
+    "ytdl-core": "^4.11.0"
+  }
+}
