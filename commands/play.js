@@ -32,9 +32,27 @@ module.exports = {
 
         var stream;
         if (ytdl.validateURL(args[0])) {
-            // If a valid youtube url is input
+            // If a valid youtube url is entered
             stream = ytdl(args[0], {filter: 'audioonly'});
         } else {
+            // If keywords are entered
+
+            // Function that searches youtube using keywords
+            const videoFinder = async (query) => {
+                const videoResult = await yts(query);
+                // If videos are found, return first one. Else, return null
+                return (videoResult.videos.length > 1) ? videoResult.videos[0] : null;
+            }
+
+            // Join all the arguments with spaces and search
+            const video = await videoFinder(args.join(' '));
+
+            if (video) {
+                stream = ytdl(video.url, {filter: 'audioonly'});
+            } else {
+                // If no videos are found
+                message.channel.send('> No video results found.');
+            }
 
         }
 
