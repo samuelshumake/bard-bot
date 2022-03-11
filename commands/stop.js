@@ -16,6 +16,12 @@ module.exports = {
 
         // Leave voice channel
         if (play.connection) return play.connection.destroy();
-        if (playlist.connection) return playlist.connection.destroy();
+        if (playlist.connection) {
+            // Deletes all playlist video titles
+            await message.channel.messages.fetch({limit: playlist.playlistLength + 2}).then(messages => {
+                message.channel.bulkDelete(messages);
+            });
+            return playlist.connection.destroy();
+        }
     }
 }

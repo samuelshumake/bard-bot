@@ -26,7 +26,6 @@ module.exports = {
         // If playlist URL is valid
         if (await !ytpl.validateID(args[0])) return message.reply('> Please enter a valid youtube playlist URL.');
 
-
         // Bot joins voice channel
         const connection = await joinVoiceChannel({
             channelId: message.member.voice.channel.id,
@@ -38,17 +37,21 @@ module.exports = {
         module.exports.connection = connection;
 
         // Get playlist ID from url then download playlist
-        var playlist_id = await ytpl.getPlaylistID(args[0]);
-        var yt_playlist = await ytpl(playlist_id);
+        var playlistId = await ytpl.getPlaylistID(args[0]);
+        var ytPlaylist = await ytpl(playlistId);
 
         // If playlist is too large, reply and quit
-        if (yt_playlist.items.length > 20) return message.reply('> Please enter a playlist with 20 videos or less.');
+        if (ytPlaylist.items.length > 20) return message.reply('> Please enter a playlist with 20 videos or less.');
 
         // For each item in playlist, print out the title, add a reaction, then add it to a dict
-        yt_playlist.items.forEach(async vid => {
+        message.channel.send('> Printing video titles, this can take some time.\n\u200B');
+        ytPlaylist.items.forEach(async vid => {
             let vidMessage = await message.channel.send('> ' + vid['title']);
-            // vidMessage.react("▶️");
+            await vidMessage.react("▶️");
         });
+
+        // Export playlist length to stop.js for deleting song titles after quitting
+        module.exports.playlistLength = ytPlaylist.items.length;
 
         // Create audio player and audio resource
         // const player = createAudioPlayer();
