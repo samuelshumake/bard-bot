@@ -6,9 +6,9 @@ module.exports = {
         // If no argument is set, reply and quit
         if (!args[0]) return message.reply("> Please enter amount of messages you want to clear.");
         // If argument isn't an integer, reply and quit
-        if (isNaN(args[0]) || !Number.isInteger(args[0])) return message.reply("> Please enter an integer as your argument.");
+        if (isNaN(args[0]) || !Number.isInteger(+args[0])) return message.reply("> Please enter an integer as your argument.");
         // If argument is greater than 100, reply and quit
-        if (args[0] > 100) return message.reply("> Please enter a number less than or equal to 25.");
+        if (args[0] > 100) return message.reply("> Please enter a number less than or equal to 100.");
         // If argument is less than one, reply and quit
         if (args[0] < 1) return message.reply("> Please enter a number greater than 0.");
 

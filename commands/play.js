@@ -10,15 +10,17 @@ module.exports = {
     name: 'play',
     description: 'Plays audio from a youtube video over voice chat.',
     async execute(message, args) {
+        // Remove embed from message
+        message.suppressEmbeds(true);
 
         // Get voice chat that user is currently in
         const voiceChannel = message.member.voice.channel;
 
         //  If user not in voice channel, reply and quit
-        if (!voiceChannel) return message.channel.send('> You must be in a voice channel to execute this command.');
+        if (!voiceChannel) return message.reply('> You must be in a voice channel to execute this command.');
 
         // If user doesn't include arguments, reply and quit
-        if (!args.length) return message.channel.send('> Please enter a youtube link or keywords to search for.');
+        if (!args.length) return message.reply('> Please enter a youtube link or keywords to search for.');
 
         // Bot joins voice channel
         const connection = await joinVoiceChannel({
@@ -51,7 +53,7 @@ module.exports = {
                 stream = ytdl(video.url, {filter: 'audioonly'});
             } else {
                 // If no videos are found
-                message.channel.send('> No video results found.');
+                message.reply('> No video results found.');
             }
         }
 

@@ -1,5 +1,6 @@
 const { joinVoiceChannel } = require('@discordjs/voice');
-const playFile = require('./play.js');
+const play = require('./play.js');
+const playlist = require('./playlist.js');
 
 module.exports = {
     name: 'stop',
@@ -10,10 +11,11 @@ module.exports = {
 
         //  If user not in voice channel, reply and quit
         if (!voiceChannel) {
-            return message.channel.send('> You need to be in a voice channel to execute this command.');
+            return message.reply('> You need to be in a voice channel to execute this command.');
         }
 
         // Leave voice channel
-        playFile.connection.destroy();
+        if (play.connection) return play.connection.destroy();
+        if (playlist.connection) return playlist.connection.destroy();
     }
 }
