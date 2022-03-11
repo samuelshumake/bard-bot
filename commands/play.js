@@ -53,7 +53,6 @@ module.exports = {
                 // If no videos are found
                 message.channel.send('> No video results found.');
             }
-
         }
 
         // Create audio player and audio resource
