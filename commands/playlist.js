@@ -47,12 +47,16 @@ module.exports = {
         module.exports.playlistLength = ytPlaylist.items.length;
 
         // For each item in playlist, print out the title, add a reaction, then add it to a dict
+        var playlist = [];
         message.channel.send('> Printing video titles, this can take some time.\n\u200B');
         ytPlaylist.items.forEach(async vid => {
+            playlist[vid['title']] = vid['url']; 
             let vidMessage = await message.channel.send('> ' + vid['title']);
             await vidMessage.react("▶️");
         });
         message.channel.send('\u200B\n> All video titles have been printed!');
+
+        var stream;
 
          // When user clicks play reaction
          client.on('messageReactionAdd', async (reaction, user) => {
@@ -64,7 +68,22 @@ module.exports = {
             // ONLY check this specific channel, otherwise bot will crawl all channels
             if (reaction.message.channel.id == '951226482636771351') {
                 if (reaction.emoji.name === "▶️") {
-                    reaction.users.remove(user);
+                    await reaction.users.remove(user);
+
+                    // Get video url from playlist dict
+                    let playlistKey = reaction.message.content.slice(2);
+            
+                    stream = ytdl(playlist[playlistKey], {filter: 'audioonly'});
+
+                    // Create audio player and audio resource
+                    const player = createAudioPlayer();
+                    const resource = createAudioResource(stream);
+
+                    // Subscribe audio player to voice connection
+                    connection.subscribe(player);
+
+                    // Play audio
+                    player.play(resource);
                 }
             } else {
                 // If not specified channel, quit
@@ -72,15 +91,7 @@ module.exports = {
             }
         });
 
-        // Create audio player and audio resource
-        // const player = createAudioPlayer();
-        // const resource = createAudioResource(stream);
-
-        // Subscribe audio player to voice connection
-        // connection.subscribe(player);
-
-        // Play audio
-        // player.play(resource);
+        
 
     }
 }
