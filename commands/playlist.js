@@ -10,7 +10,7 @@ const ytpl = require('ytpl');
 module.exports = {
     name: 'playlist',
     description: 'Lists out videos from a youtube playlist for playing over audio.',
-    async execute(message, args, Discord) {
+    async execute(message, args, Discord, client) {
         // Remove embed from message
         message.suppressEmbeds(true);
 
@@ -43,15 +43,34 @@ module.exports = {
         // If playlist is too large, reply and quit
         if (ytPlaylist.items.length > 20) return message.reply('> Please enter a playlist with 20 videos or less.');
 
+        // Export playlist length to stop.js for deleting song titles after quitting
+        module.exports.playlistLength = ytPlaylist.items.length;
+
         // For each item in playlist, print out the title, add a reaction, then add it to a dict
         message.channel.send('> Printing video titles, this can take some time.\n\u200B');
         ytPlaylist.items.forEach(async vid => {
             let vidMessage = await message.channel.send('> ' + vid['title']);
             await vidMessage.react("▶️");
         });
+        message.channel.send('\u200B\n> All video titles have been printed!');
 
-        // Export playlist length to stop.js for deleting song titles after quitting
-        module.exports.playlistLength = ytPlaylist.items.length;
+         // When user clicks play reaction
+         client.on('messageReactionAdd', async (reaction, user) => {
+            if (reaction.message.partial) await reaction.message.fetch();
+            if (reaction.partial) await reaction.fetch();
+            if (user.bot) return;
+            if (!reaction.message.guild) return;
+
+            // ONLY check this specific channel, otherwise bot will crawl all channels
+            if (reaction.message.channel.id == '951226482636771351') {
+                if (reaction.emoji.name === "▶️") {
+                    reaction.users.remove(user);
+                }
+            } else {
+                // If not specified channel, quit
+                return;
+            }
+        });
 
         // Create audio player and audio resource
         // const player = createAudioPlayer();
