@@ -18,7 +18,7 @@ module.exports = {
         const voiceChannel = message.member.voice.channel;
 
         // If user not in correct text channel, reply and quit
-        if (message.channel.id == '951226482636771351' || message.channel.id == '951966549760155759') {
+        if (message.channel.id != '951966549760155759') {
             return message.reply('> You are not in the correct text channel to execute this command. Please switch to the #bard-bot channel.');
         }
 
@@ -71,7 +71,7 @@ module.exports = {
             if (!reaction.message.guild) return;
 
             // ONLY check this specific channel, otherwise bot will crawl all channels
-            if (reaction.message.channel.id == '951226482636771351' || reaction.message.channel.id == '951966549760155759') {
+            if (reaction.message.channel.id == '951966549760155759') {
                 if (reaction.emoji.name === "▶️") {
                     await reaction.users.remove(user);
 
