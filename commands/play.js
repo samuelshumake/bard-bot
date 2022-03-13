@@ -29,9 +29,6 @@ module.exports = {
             adapterCreator: message.guild.voiceAdapterCreator
         })
 
-        // Add connection to module.exports for use in stop.js file
-        module.exports.connection = connection;
-
         var stream;
         if (ytdl.validateURL(args[0])) {
             // If a valid youtube url is entered
@@ -67,5 +64,10 @@ module.exports = {
         // Play audio
         player.play(resource);
 
+        // Add connection to module.exports for use in stop.js file
+        module.exports.connection = connection;
+
+        //  Add player to module.exports for use in pause.js/resume.js file
+        module.exports.player = player;
     }
 }

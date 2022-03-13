@@ -10,7 +10,7 @@ const ytpl = require('ytpl');
 module.exports = {
     name: 'playlist',
     description: 'Lists out videos from a youtube playlist for playing over audio.',
-    async execute(message, args, client) {
+    async execute(message, args, Discord, client) {
         // Remove embed from message
         message.suppressEmbeds(true);
 
@@ -18,7 +18,7 @@ module.exports = {
         const voiceChannel = message.member.voice.channel;
 
         // If user not in correct text channel, reply and quit
-        if (message.channel.id != '951966549760155759') {
+        if (message.channel.id !== '951966549760155759') {
             return message.reply('> You are not in the correct text channel to execute this command. Please switch to the #bard-bot channel.');
         }
 
@@ -38,18 +38,12 @@ module.exports = {
             adapterCreator: message.guild.voiceAdapterCreator
         })
 
-        // Add connection to module.exports for use in stop.js file
-        module.exports.connection = connection;
-
         // Get playlist ID from url then download playlist
         var playlistId = await ytpl.getPlaylistID(args[0]);
         var ytPlaylist = await ytpl(playlistId);
 
         // If playlist is too large, reply and quit
         if (ytPlaylist.items.length > 20) return message.reply('> Please enter a playlist with 20 videos or less.');
-
-        // Export playlist length to stop.js for deleting song titles after quitting
-        module.exports.playlistLength = ytPlaylist.items.length;
 
         // For each item in playlist, print out the title, add a reaction, then add it to a dict
         var playlist = [];
@@ -89,6 +83,9 @@ module.exports = {
 
                     // Play audio
                     player.play(resource);
+
+                    //  Add player to module.exports for use in pause.js/resume.js file
+                    module.exports.player = player;
                 }
             } else {
                 // If not specified channel, quit
@@ -96,7 +93,10 @@ module.exports = {
             }
         });
 
-        
+        // Add connection to module.exports for use in stop.js file
+        module.exports.connection = connection;
 
+        // Export playlist length to stop.js for deleting song titles after quitting
+        module.exports.playlistLength = ytPlaylist.items.length;
     }
 }
