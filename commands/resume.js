@@ -3,7 +3,7 @@ const playlist = require('./playlist.js');
 
 module.exports = {
     name: 'resume',
-    description: 'Pauses bot audio on voice chat.',
+    description: 'Resumes bot audio on voice chat.',
     async execute(message, args) {
 
         const voiceChannel = message.member.voice.channel;
