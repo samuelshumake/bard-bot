@@ -22,6 +22,13 @@ for (const file of commandFiles) {
     client.commands.set(command.name, command);
 }
 
+// Reads through secret commands directory
+const customCommandFiles = fs.readdirSync('./custom-commands/').filter(file => file.endsWith('.js'));
+for (const file of customCommandFiles) {
+    let command = require(`./custom-commands/${file}`);
+    client.commands.set(command.name, command);
+}
+
 client.on('messageCreate', message => {
     // If message doesn't start with prefix or if message is from bot, quit.
     if (!message.content.startsWith(process.env.PREFIX) || message.author.bot) return;
