@@ -10,12 +10,17 @@ const ytpl = require('ytpl');
 module.exports = {
     name: 'playlist',
     description: 'Lists out videos from a youtube playlist for playing over audio.',
-    async execute(message, args, Discord, client) {
+    async execute(message, args, client) {
         // Remove embed from message
         message.suppressEmbeds(true);
 
         // Get voice chat that user is currently in
         const voiceChannel = message.member.voice.channel;
+
+        // If user not in correct text channel, reply and quit
+        if (message.channel.id == '951226482636771351' || message.channel.id == '951966549760155759') {
+            return message.reply('> You are not in the correct text channel to execute this command. Please switch to the #bard-bot channel.');
+        }
 
         //  If user not in voice channel, reply and quit
         if (!voiceChannel) return message.reply('> You must be in a voice channel to execute this command.');
