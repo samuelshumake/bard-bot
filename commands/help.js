@@ -7,6 +7,7 @@ module.exports = {
         var helpMessage = '> **Audio Player Commands**\n';
         helpMessage += '`.play {url | keywords}` - Plays audio from a Youtube video over voice chat.\n';
         helpMessage += '`.playlist {url}` - Prints out videos from Youtube playlist and allows user to click reactions to play over voice chat.\n';
+        helpMessage += '`.loop` - Sets the currently playing audio to continuously loop.\n';
         helpMessage += '`.pause` - Pauses audio player.\n';
         helpMessage += '`.resume` - Unpauses audio player.\n';
         helpMessage += '`.stop` - Quits audio player and removes bot from voice chat.\n\u200b\n';
