@@ -13,12 +13,6 @@ module.exports = {
 
         // Destroy voice connection
         if (play.connection && play.connection['_state']['status'] == 'ready') return play.connection.destroy();
-        if (playlist.connection && playlist.connection['_state']['status'] == 'ready') {
-            // Deletes all playlist video titles
-            await message.channel.messages.fetch({limit: playlist.playlistLength + 3}).then(messages => {
-                message.channel.bulkDelete(messages);
-            });
-            return playlist.connection.destroy();
-        }
+        if (playlist.connection && playlist.connection['_state']['status'] == 'ready') return playlist.connection.destroy();
     }
 }

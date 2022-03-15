@@ -10,7 +10,7 @@ module.exports = {
         helpMessage += '`.loop` - Sets the currently playing audio to continuously loop.\n';
         helpMessage += '`.pause` - Pauses audio player.\n';
         helpMessage += '`.resume` - Unpauses audio player.\n';
-        helpMessage += '`.stop` - Quits audio player and removes bot from voice chat.\n\u200b\n';
+        helpMessage += '`.stop` - Quits audio player. \n\u200b\n';
 
         // General Commands
         helpMessage += '> **General Commands**\n';
