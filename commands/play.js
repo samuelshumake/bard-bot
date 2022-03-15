@@ -33,6 +33,8 @@ module.exports = {
         if (ytdl.validateURL(args[0])) {
             // If a valid youtube url is entered
             stream = ytdl(args[0], {filter: 'audioonly'});
+
+            // Adds video url to module.exports for use in loop.js file
             module.exports.video = args[0];
         } else {
             // If keywords are entered
@@ -49,7 +51,7 @@ module.exports = {
 
             if (video) {
                 stream = ytdl(video.url, {filter: 'audioonly'});
-                // Exports video url for loop command
+                // Adds video url to module.exports for use in loop.js file
                 module.exports.video = video.url;
             } else {
                 // If no videos are found
@@ -66,6 +68,8 @@ module.exports = {
 
         // Play audio
         player.play(resource);
+
+        // TODO: Add a 'now playing' message that deletes after a while
 
         // Add connection to module.exports for use in stop.js file
         module.exports.connection = connection;

@@ -71,9 +71,6 @@ module.exports = {
 
                     // Get video url from playlist dict
                     let playlistKey = reaction.message.content.slice(2);
-
-                    // Exports video url for loop command
-                    module.exports.video = playlist[playlistKey];
             
                     stream = ytdl(playlist[playlistKey], {filter: 'audioonly'});
 
@@ -87,8 +84,13 @@ module.exports = {
                     // Play audio
                     player.play(resource);
 
-                    //  Add player to module.exports for use in pause.js/resume.js file
+                    // Adds player to module.exports for use in pause.js/resume.js file
                     module.exports.player = player;
+
+                    // Adds video url to module.exports for use in loop.js file
+                    module.exports.video = playlist[playlistKey];
+
+                    // TODO: Add a 'Now Playing' message that deletes after a while
                 }
             } else {
                 // If not specified channel, quit
