@@ -43,7 +43,7 @@ module.exports = {
         var ytPlaylist = await ytpl(playlistId);
 
         // If playlist is too large, reply and quit
-        if (ytPlaylist.items.length > 20) return message.reply('> Please enter a playlist with 20 videos or less.');
+        if (ytPlaylist.items.length > 25) return message.reply('> Please enter a playlist with 25 videos or less.');
 
         // For each item in playlist, print out the title, add a reaction, then add it to a dict
         var playlist = [];
@@ -71,12 +71,15 @@ module.exports = {
 
                     // Get video url from playlist dict
                     let playlistKey = reaction.message.content.slice(2);
+
+                    // Exports video url for loop command
+                    module.exports.video = playlist[playlistKey];
             
                     stream = ytdl(playlist[playlistKey], {filter: 'audioonly'});
 
                     // Create audio player and audio resource
                     const player = createAudioPlayer();
-                    const resource = createAudioResource(stream);
+                    var resource = createAudioResource(stream);
 
                     // Subscribe audio player to voice connection
                     connection.subscribe(player);

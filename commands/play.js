@@ -33,6 +33,7 @@ module.exports = {
         if (ytdl.validateURL(args[0])) {
             // If a valid youtube url is entered
             stream = ytdl(args[0], {filter: 'audioonly'});
+            module.exports.video = args[0];
         } else {
             // If keywords are entered
 
@@ -48,6 +49,8 @@ module.exports = {
 
             if (video) {
                 stream = ytdl(video.url, {filter: 'audioonly'});
+                // Exports video url for loop command
+                module.exports.video = video.url;
             } else {
                 // If no videos are found
                 message.reply('> No video results found.');
@@ -56,7 +59,7 @@ module.exports = {
 
         // Create audio player and audio resource
         const player = createAudioPlayer();
-        const resource = createAudioResource(stream);
+        var resource = createAudioResource(stream);
 
         // Subscribe audio player to voice connection
         connection.subscribe(player);
