@@ -6,7 +6,7 @@ const { createAudioResource } = require('@discordjs/voice');
 module.exports = {
     name: 'loop',
     description: 'Sets the current song to loop endlessly.',
-    async execute(message, args) {
+    async execute(message, args, Discord, client) {
 
         const voiceChannel = message.member.voice.channel;
 
@@ -21,6 +21,7 @@ module.exports = {
                 stream = ytdl(play.video, {filter: 'audioonly'});
                 resource = createAudioResource(stream);
                 play.player.play(resource);
+                // TODO: Test rewriting above block to just be a command.execute like in index.js
             });
         }
         if (playlist.player && playlist.video && playlist.player['_state']['status'] == 'playing') {
@@ -28,6 +29,7 @@ module.exports = {
                 stream = ytdl(playlist.video, {filter: 'audioonly'});
                 resource = createAudioResource(stream);
                 playlist.player.play(resource);
+                // TODO: Test rewriting above block to just be a command.execute like in index.js
             });
         }
     }

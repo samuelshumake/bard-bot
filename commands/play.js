@@ -69,8 +69,6 @@ module.exports = {
         // Play audio
         player.play(resource);
 
-        // TODO: Add a 'now playing' message that deletes after a while
-
         // Add connection to module.exports for use in stop.js file
         module.exports.connection = connection;
 

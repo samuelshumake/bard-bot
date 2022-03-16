@@ -6,6 +6,7 @@ const {
 const ytdl = require('ytdl-core');
 const yts = require('yt-search');
 const ytpl = require('ytpl');
+const playlist = require('./playlist.js');
 
 module.exports = {
     name: 'playlist',
@@ -18,7 +19,7 @@ module.exports = {
         const voiceChannel = message.member.voice.channel;
 
         // If user not in correct text channel, reply and quit
-        if (message.channel.id !== '951966549760155759') {
+        if (message.channel.id !== '951966549760155759' && message.channel.id !== '951260566041813063') {
             return message.reply('> You are not in the correct text channel to execute this command. Please switch to the #bard-bot channel.');
         }
 
@@ -65,7 +66,7 @@ module.exports = {
             if (!reaction.message.guild) return;
 
             // ONLY check this specific channel, otherwise bot will crawl all channels
-            if (reaction.message.channel.id == '951966549760155759') {
+            if (reaction.message.channel.id == '951966549760155759' || reaction.message.channel.id == '951260566041813063') {
                 if (reaction.emoji.name === "▶️") {
                     await reaction.users.remove(user);
 
@@ -89,8 +90,6 @@ module.exports = {
 
                     // Adds video url to module.exports for use in loop.js file
                     module.exports.video = playlist[playlistKey];
-
-                    // TODO: Add a 'Now Playing' message that deletes after a while
                 }
             } else {
                 // If not specified channel, quit
