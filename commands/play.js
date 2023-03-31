@@ -27,7 +27,7 @@ module.exports = {
             channelId: message.member.voice.channel.id,
             guildId: message.guild.id,
             adapterCreator: message.guild.voiceAdapterCreator
-        })
+        });
 
         var stream;
         if (ytdl.validateURL(args[0])) {
