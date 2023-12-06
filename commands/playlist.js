@@ -19,7 +19,7 @@ module.exports = {
         const voiceChannel = message.member.voice.channel;
 
         // If user not in correct text channel, reply and quit
-        if (message.channel.id !== '951966549760155759' && message.channel.id !== '951260566041813063') {
+        if (message.channel.id !== '1017567831182823475') {
             return message.reply('> You are not in the correct text channel to execute this command. Please switch to the #bard-bot channel.');
         }
 
@@ -52,7 +52,7 @@ module.exports = {
         ytPlaylist.items.forEach(async vid => {
             playlist[vid['title']] = vid['url']; 
             let vidMessage = await message.channel.send('> ' + vid['title']);
-            await vidMessage.react("▶️");
+            await vidMessage.react("▶");
         });
         message.channel.send('\u200B\n> All video titles have been printed!');
 
@@ -66,8 +66,8 @@ module.exports = {
             if (!reaction.message.guild) return;
 
             // ONLY check this specific channel, otherwise bot will crawl all channels
-            if (reaction.message.channel.id == '951966549760155759' || reaction.message.channel.id == '951260566041813063') {
-                if (reaction.emoji.name === "▶️") {
+            if (reaction.message.channel.id == '1017567831182823475') {
+                if (reaction.emoji.name === "▶") {
                     await reaction.users.remove(user);
 
                     // Get video url from playlist dict

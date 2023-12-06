@@ -16,7 +16,7 @@ module.exports = {
             play.player.pause();
         } else if (playlist.player && playlist.player['_state']['status'] == 'playing') {
             playlist.player.pause();
-        } else if ((play.player && play.player['state']['status'] == 'paused') || (playlist.player && playlist.player['state']['status'] == 'paused')) {
+        } else if ((play.player && play.player['_state']['status'] == 'paused') || (playlist.player && playlist.player['_state']['status'] == 'paused')) {
             return message.reply('> This audio is already paused.');
         } else {
             return message.reply('> There is no audio playing to pause.');
